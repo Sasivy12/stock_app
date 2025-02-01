@@ -22,9 +22,9 @@ import java.io.IOException;
 public class JwtFilter extends OncePerRequestFilter
 {
 
-    JwtService jwtService;
+    private final JwtService jwtService;
 
-    ApplicationContext applicationContext;
+    private final ApplicationContext applicationContext;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException

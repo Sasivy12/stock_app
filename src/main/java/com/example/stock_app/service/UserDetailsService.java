@@ -1,10 +1,10 @@
 package com.example.stock_app.service;
 
+import com.example.stock_app.exception.UserNotFoundException;
 import com.example.stock_app.model.User;
 import com.example.stock_app.model.UserDetails;
 import com.example.stock_app.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,18 +12,20 @@ import org.springframework.stereotype.Service;
 public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService
 {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
+    public UserDetails loadUserByUsername(String email) throws UserNotFoundException
     {
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByEmail(email);
 
         if(user == null)
         {
-            throw new UsernameNotFoundException("User not found");
+            throw new UserNotFoundException("User not found");
         }
 
+        System.out.println("✅ User found: " + user.getEmail());
         return new UserDetails(user);
+
     }
 }
