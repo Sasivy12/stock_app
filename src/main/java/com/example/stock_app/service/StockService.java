@@ -17,7 +17,7 @@ public class StockService
 {
 
     private final StockRepository stockRepository;
-    private final String API_KEY = "I1QH2HWHB3W6IMCC";
+    private final String API_KEY = "xxxxx";
 
     private final StockApiClient stockApiClient;
 
