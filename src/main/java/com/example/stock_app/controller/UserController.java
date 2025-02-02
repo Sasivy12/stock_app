@@ -4,7 +4,6 @@ import com.example.stock_app.model.User;
 import com.example.stock_app.service.UserService;
 import jakarta.mail.AuthenticationFailedException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

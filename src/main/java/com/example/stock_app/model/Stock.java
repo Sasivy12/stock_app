@@ -1,13 +1,18 @@
 package com.example.stock_app.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Data
 @Table(name = "stock")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Stock
 {
     @Id
