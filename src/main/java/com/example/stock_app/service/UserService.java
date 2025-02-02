@@ -2,7 +2,6 @@ package com.example.stock_app.service;
 
 import com.example.stock_app.exception.UserAlreadyExistsException;
 import com.example.stock_app.model.User;
-import com.example.stock_app.model.UserDetails;
 import com.example.stock_app.repository.UserRepository;
 import jakarta.mail.AuthenticationFailedException;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +9,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -34,7 +32,6 @@ public class UserService
 
         user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user);
-
     }
 
     public String verify(User user) throws AuthenticationFailedException {
