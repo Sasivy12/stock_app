@@ -27,8 +27,6 @@ public class StockService
     {
         StockResponse stockResponse = stockApiClient.getStockPrice("TIME_SERIES_DAILY", symbol, API_KEY);
 
-        System.out.println("Stock API Response: " + stockResponse);
-
         String latestDate = stockResponse.getTimeSeriesDaily().keySet().iterator().next();
         DailyStockData dailyStockData = stockResponse.getTimeSeriesDaily().get(latestDate);
 
