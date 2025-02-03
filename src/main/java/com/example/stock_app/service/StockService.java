@@ -25,9 +25,7 @@ public class StockService
 
     public Stock getStockPrice(String symbol)
     {
-        StockResponse stockResponse = stockApiClient.getStockPrice("TIME_SERIES_DAILY", symbol, API_KEY);
-
-        System.out.println("Stock API Response: " + stockResponse);
+        StockResponse stockResponse = stockApiClient.getStockPrice("TIME_SERIES_DAILY", symbol.toUpperCase(), API_KEY);
 
         String latestDate = stockResponse.getTimeSeriesDaily().keySet().iterator().next();
         DailyStockData dailyStockData = stockResponse.getTimeSeriesDaily().get(latestDate);
@@ -36,7 +34,7 @@ public class StockService
                 .orElse(new Stock(null, symbol, symbol, 0.0, LocalDateTime.now()));
 
         stock.setPrice(dailyStockData.getClosePrice());
-        stock.setName(symbol);
+        stock.setName(symbol.toUpperCase());
 
         stockRepository.save(stock);
 
