@@ -18,18 +18,21 @@ public class StockService
 {
 
     private final StockRepository stockRepository;
-    private final String API_KEY = "EXVGDTN70BIXNV5N";
+  
+    private final String API_KEY = "xxxxx";
 
     private final StockApiClient stockApiClient;
 
     private final PortfolioRepository portfolioRepository;
 
-    public Stock getStockPrice(String symbol) {
+    public Stock getStockPrice(String symbol)
+    {
         StockResponse stockResponse = stockApiClient.getStockPrice("TIME_SERIES_DAILY", symbol, API_KEY);
 
         System.out.println("API Response: " + stockResponse);
 
-        if (stockResponse == null || stockResponse.getTimeSeriesDaily() == null) {
+        if (stockResponse == null || stockResponse.getTimeSeriesDaily() == null) 
+        {
             throw new RuntimeException("No stock data available for symbol: " + symbol);
         }
 
