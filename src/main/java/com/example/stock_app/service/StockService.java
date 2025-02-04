@@ -63,6 +63,11 @@ public class StockService
             throw new StockNotFoundException("No stock data available for symbol: " + symbol);
         }
 
+        if(quantity == 0)
+        {
+            throw new RuntimeException("Quantity cannot be null");
+        }
+
         String latestDate = stockResponse.getTimeSeriesDaily().keySet().iterator().next();
         DailyStockData dailyStockData = stockResponse.getTimeSeriesDaily().get(latestDate);
 
