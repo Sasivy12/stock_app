@@ -22,8 +22,8 @@ public class StockService
 {
 
     private final StockRepository stockRepository;
-    private final UserRepository userRepository;
-    private final String API_KEY = "EXVGDTN70BIXNV5N";
+
+    private final String API_KEY = "xxxxx";
 
     private final StockApiClient stockApiClient;
 
@@ -53,7 +53,7 @@ public class StockService
 
         return stock;
     }
-
+  
     public Stock buyStock(String symbol, User user, int quantity)
     {
         StockResponse stockResponse = stockApiClient.getStockPrice("TIME_SERIES_DAILY", symbol, API_KEY);
