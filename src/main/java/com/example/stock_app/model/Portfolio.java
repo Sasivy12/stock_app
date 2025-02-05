@@ -13,17 +13,12 @@ public class Portfolio
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
-
     @ManyToOne(fetch = FetchType.EAGER)
     private Stock stock;
-
     private int quantity;
-
     private double buyPrice;
-
     private LocalDateTime createdAt;
 
 }

@@ -1,6 +1,7 @@
 package com.example.stock_app.service;
 
 import com.example.stock_app.client.StockApiClient;
+import com.example.stock_app.dto.StockDTO;
 import com.example.stock_app.exception.StockNotFoundException;
 import com.example.stock_app.exception.UserNotFoundException;
 import com.example.stock_app.model.Portfolio;
@@ -20,16 +21,14 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class StockService
 {
-
+    private final PortfolioRepository portfolioRepository;
     private final StockRepository stockRepository;
     private final UserRepository userRepository;
     private final String API_KEY = "EXVGDTN70BIXNV5N";
-
     private final StockApiClient stockApiClient;
 
-    private final PortfolioRepository portfolioRepository;
 
-    public Stock getStockPrice(String symbol)
+    public StockDTO getStockPrice(String symbol)
     {
         StockResponse stockResponse = stockApiClient.getStockPrice("TIME_SERIES_DAILY", symbol, API_KEY);
 
@@ -51,7 +50,7 @@ public class StockService
 
         stockRepository.save(stock);
 
-        return stock;
+        return new StockDTO(stock.getSymbol(), stock.getName(), stock.getPrice());
     }
 
     public Stock buyStock(String symbol, User user, int quantity)

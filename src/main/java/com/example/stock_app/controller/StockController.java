@@ -1,5 +1,6 @@
 package com.example.stock_app.controller;
 
+import com.example.stock_app.dto.StockDTO;
 import com.example.stock_app.model.Stock;
 import com.example.stock_app.model.User;
 import com.example.stock_app.repository.UserRepository;
@@ -17,9 +18,9 @@ public class StockController
     private final UserRepository userRepository;
 
     @GetMapping("/{symbol}")
-    public ResponseEntity<Stock> getStock(@PathVariable String symbol)
+    public ResponseEntity<StockDTO> getStock(@PathVariable String symbol)
     {
-        Stock stock = stockService.getStockPrice(symbol);
+        StockDTO stock = stockService.getStockPrice(symbol);
 
         return ResponseEntity.ok(stock);
     }
