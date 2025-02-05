@@ -1,6 +1,7 @@
 package com.example.stock_app.service;
 
 import com.example.stock_app.client.StockApiClient;
+import com.example.stock_app.dto.BuyStockRequest;
 import com.example.stock_app.dto.StockDTO;
 import com.example.stock_app.exception.StockNotFoundException;
 import com.example.stock_app.exception.UserNotFoundException;
@@ -53,16 +54,16 @@ public class StockService
         return new StockDTO(stock.getSymbol(), stock.getName(), stock.getPrice());
     }
 
-    public Stock buyStock(String symbol, User user, int quantity)
+    public StockDTO buyStock(BuyStockRequest request)
     {
-        StockResponse stockResponse = stockApiClient.getStockPrice("TIME_SERIES_DAILY", symbol, API_KEY);
+        StockResponse stockResponse = stockApiClient.getStockPrice("TIME_SERIES_DAILY", request.getSymbol(), API_KEY);
 
         if (stockResponse == null || stockResponse.getTimeSeriesDaily() == null)
         {
-            throw new StockNotFoundException("No stock data available for symbol: " + symbol);
+            throw new StockNotFoundException("No stock data available for symbol: " + request.getSymbol());
         }
 
-        if(quantity == 0)
+        if(request.getQuantity() <= 0)
         {
             throw new RuntimeException("Quantity cannot be null");
         }
@@ -70,24 +71,24 @@ public class StockService
         String latestDate = stockResponse.getTimeSeriesDaily().keySet().iterator().next();
         DailyStockData dailyStockData = stockResponse.getTimeSeriesDaily().get(latestDate);
 
-        Stock stock = stockRepository.findBySymbol(symbol)
-                .orElseGet(() -> stockRepository.save(new Stock(null, symbol, symbol, 0.0, LocalDateTime.now())));
+        Stock stock = stockRepository.findBySymbol(request.getSymbol())
+                .orElseGet(() -> stockRepository.save(new Stock(null, request.getSymbol(), request.getSymbol(), 0.0, LocalDateTime.now())));
 
         stock.setPrice(dailyStockData.getClosePrice());
-        stock.setName(symbol);
+        stock.setName(request.getSymbol());
 
-        User existingUser = userRepository.findById(user.getId())
-                .orElseThrow(() -> new UserNotFoundException("User not found with id: " + user.getId()));
+        User existingUser = userRepository.findById(request.getUserId())
+                .orElseThrow(() -> new UserNotFoundException("User not found with id: " + request.getUserId()));
 
         Portfolio portfolio = new Portfolio();
         portfolio.setStock(stock);
         portfolio.setBuyPrice(stock.getPrice());
         portfolio.setCreatedAt(LocalDateTime.now());
         portfolio.setUser(existingUser);
-        portfolio.setQuantity(quantity);
+        portfolio.setQuantity(request.getQuantity());
 
         portfolioRepository.save(portfolio);
 
-        return stock;
+        return new StockDTO(stock.getSymbol(), stock.getName(), stock.getPrice());
     }
 }
