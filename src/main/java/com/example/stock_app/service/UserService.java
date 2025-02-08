@@ -1,6 +1,7 @@
 package com.example.stock_app.service;
 
 import com.example.stock_app.exception.UserAlreadyExistsException;
+import com.example.stock_app.exception.UserNotFoundException;
 import com.example.stock_app.model.User;
 import com.example.stock_app.repository.UserRepository;
 import jakarta.mail.AuthenticationFailedException;
@@ -51,4 +52,13 @@ public class UserService
         }
         return "FAILED";
     }
+
+    public User getUserInfo(Long userId)
+    {
+        User existingUser = userRepository.findById(userId).orElseThrow(()
+                -> (new UserNotFoundException("User with id " + userId + " does not exist")));
+
+        return existingUser;
+    }
+
 }

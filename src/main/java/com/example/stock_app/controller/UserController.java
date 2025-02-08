@@ -25,4 +25,10 @@ public class UserController
     {
         return userService.verify(user);
     }
+
+    @GetMapping("/user/{userId}")
+    public User getUserById(@PathVariable Long userId)
+    {
+        return userService.getUserInfo(userId);
+    }
 }
