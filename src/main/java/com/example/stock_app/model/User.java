@@ -22,5 +22,7 @@ public class User
     private String password;
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<Role> roles;
+    @Column(nullable = false)
+    private double balance = 0.0; // Default value
 
 }
