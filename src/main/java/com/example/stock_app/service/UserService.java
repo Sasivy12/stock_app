@@ -1,8 +1,10 @@
 package com.example.stock_app.service;
 
+import com.example.stock_app.dto.UpdateUserRequest;
 import com.example.stock_app.exception.UserAlreadyExistsException;
 import com.example.stock_app.exception.UserNotFoundException;
 import com.example.stock_app.model.User;
+import com.example.stock_app.model.UserDetails;
 import com.example.stock_app.repository.UserRepository;
 import jakarta.mail.AuthenticationFailedException;
 import lombok.RequiredArgsConstructor;
@@ -59,6 +61,21 @@ public class UserService
                 -> (new UserNotFoundException("User with id " + userId + " does not exist")));
 
         return existingUser;
+    }
+
+    public String updateUser(String email, UpdateUserRequest updateUserRequest)
+    {
+        User existingUser = userRepository.findByEmail(updateUserRequest.getEmail()).orElseThrow(
+                () -> (new UserNotFoundException("This user does not exist")));
+
+        existingUser.setEmail(updateUserRequest.getEmail());
+        existingUser.setPassword(updateUserRequest.getPassword());
+        existingUser.setBalance(updateUserRequest.getBalance());
+        existingUser.setUsername(updateUserRequest.getUsername());
+
+        userRepository.save(existingUser);
+
+        return "User successfully updated";
     }
 
 }

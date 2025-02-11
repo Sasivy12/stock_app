@@ -14,15 +14,20 @@ public class User
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     @NotEmpty(message = "Email should not be null")
     private String email;
+
     @NotEmpty(message = "Username should not be null")
     private String username;
+
     @NotEmpty(message = "Password should not be null")
     private String password;
-    @ManyToMany(fetch = FetchType.LAZY)
+
+    @ManyToMany()
     private Set<Role> roles;
+
     @Column(nullable = false)
-    private double balance = 0.0; // Default value
+    private double balance = 0.0;
 
 }
