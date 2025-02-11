@@ -28,9 +28,9 @@ public class StockService
     private final PortfolioRepository portfolioRepository;
     private final StockRepository stockRepository;
     private final UserRepository userRepository;
-    private final TransactionRepository transactionRepository;
 
-    private final String API_KEY = "EXVGDTN70BIXNV5N";
+    private final String API_KEY = "xxxxxx";
+
     private final StockApiClient stockApiClient;
 
 
