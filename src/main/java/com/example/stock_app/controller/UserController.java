@@ -35,7 +35,6 @@ public class UserController
             @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing JWT token"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<String> register(@RequestBody User user)
     {
         return ResponseEntity.ok(userService.register(user));
@@ -48,7 +47,6 @@ public class UserController
             @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing JWT token"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<String> login(@RequestBody User user) throws AuthenticationFailedException
     {
         return ResponseEntity.ok(userService.verify(user));
@@ -58,8 +56,7 @@ public class UserController
     @GetMapping("/user/{userId}")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User successfully found",
-                    content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = User.class))),
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = User.class))),
             @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing JWT token"),
             @ApiResponse(responseCode = "404", description = "User not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
