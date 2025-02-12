@@ -4,8 +4,8 @@ import com.example.stock_app.dto.UpdateUserRequest;
 import com.example.stock_app.exception.UserAlreadyExistsException;
 import com.example.stock_app.exception.UserNotFoundException;
 import com.example.stock_app.model.User;
-import com.example.stock_app.model.UserDetails;
 import com.example.stock_app.repository.UserRepository;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.mail.AuthenticationFailedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,7 +26,7 @@ public class UserService
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
-    public void register(User user)
+    public String register(User user)
     {
         if(userRepository.existsByEmail(user.getEmail()))
         {
@@ -35,6 +35,8 @@ public class UserService
 
         user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user);
+
+        return "Registration successful";
     }
 
     public String verify(User user) throws AuthenticationFailedException {
@@ -69,7 +71,7 @@ public class UserService
                 () -> (new UserNotFoundException("This user does not exist")));
 
         existingUser.setEmail(updateUserRequest.getEmail());
-        existingUser.setPassword(updateUserRequest.getPassword());
+        existingUser.setPassword(encoder.encode(updateUserRequest.getPassword()));
         existingUser.setBalance(updateUserRequest.getBalance());
         existingUser.setUsername(updateUserRequest.getUsername());
 
