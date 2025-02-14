@@ -41,7 +41,14 @@ public class PortfolioController
         return portfolioService.getUserPortfolio(userId);
     }
 
+    @Operation(summary = "Sell user's stock", description = "Allows user to sell stock that they have in their portfolio")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Sold stock successfully"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - JWT token required or Invalid request"),
+            @ApiResponse(responseCode = "500", description = "Internal server error"),
+    })
     @PostMapping("/{symbol}/sell/{quantity}")
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<String> sellStock(
             @PathVariable("symbol") String symbol, @PathVariable("quantity") int quantity,@AuthenticationPrincipal UserDetails userDetails)
     {
