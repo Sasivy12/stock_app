@@ -20,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -116,4 +117,5 @@ public class StockService
 
         return new StockDTO(stock.getSymbol(), stock.getName(), stock.getPrice());
     }
+
 }

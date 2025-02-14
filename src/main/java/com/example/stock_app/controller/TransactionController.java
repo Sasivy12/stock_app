@@ -1,10 +1,7 @@
 package com.example.stock_app.controller;
 
-import com.example.stock_app.dto.StockDTO;
 import com.example.stock_app.service.TransactionService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
