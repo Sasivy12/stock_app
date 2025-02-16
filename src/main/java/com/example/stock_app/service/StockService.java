@@ -20,7 +20,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +29,6 @@ public class StockService
     private final StockRepository stockRepository;
     private final UserRepository userRepository;
     private final TransactionRepository transactionRepository;
-
     private final String API_KEY = "EXVGDTN70BIXNV5N";
     private final StockApiClient stockApiClient;
 
