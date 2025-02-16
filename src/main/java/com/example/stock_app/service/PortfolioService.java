@@ -22,7 +22,7 @@ public class PortfolioService
     private final PortfolioRepository portfolioRepository;
     private final UserRepository userRepository;
     private final StockApiClient stockApiClient;
-    private final String API_KEY = "EXVGDTN70BIXNV5N";
+    private final String API_KEY = "xxxxxx";
 
 
     public List<Portfolio> getUserPortfolio(Long userId)
