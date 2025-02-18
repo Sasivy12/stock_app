@@ -38,6 +38,9 @@ class UserServiceTest
     @Mock
     private Authentication authentication;
 
+    @Mock
+    private UserActivityProducer userActivityProducer;
+
     private BCryptPasswordEncoder encoder;
 
 
@@ -66,8 +69,7 @@ class UserServiceTest
     }
 
     @Test
-    void testRegister_Success()
-    {
+    void testRegister_Success() {
         // Arrange
         User user = new User();
         user.setEmail("test@example.com");
@@ -82,6 +84,7 @@ class UserServiceTest
         // Assert
         assertEquals("Registration successful", result);
         verify(userRepository).save(any(User.class));
+        verify(userActivityProducer).sendActivity("User registered: " + user.getEmail());
     }
 
     @Test
