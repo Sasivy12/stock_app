@@ -19,12 +19,11 @@ import org.springframework.stereotype.Service;
 public class UserService
 {
     private final UserRepository userRepository;
-
     private final AuthenticationManager authManager;
-
     private final JwtService jwtService;
-
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
+    private final UserActivityProducer userActivityProducer;
+
 
     public String register(User user)
     {
@@ -35,6 +34,8 @@ public class UserService
 
         user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user);
+
+        userActivityProducer.sendActivity("User registered: " + user.getEmail());
 
         return "Registration successful";
     }
