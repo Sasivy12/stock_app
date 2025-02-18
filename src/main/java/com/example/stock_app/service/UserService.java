@@ -19,12 +19,11 @@ import org.springframework.stereotype.Service;
 public class UserService
 {
     private final UserRepository userRepository;
-
     private final AuthenticationManager authManager;
-
     private final JwtService jwtService;
-
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
+    private final UserActivityProducer userActivityProducer;
+
 
     public String register(User user)
     {
@@ -35,6 +34,8 @@ public class UserService
 
         user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user);
+
+        userActivityProducer.sendActivity("User registered: " + user.getEmail());
 
         return "Registration successful";
     }
@@ -47,6 +48,8 @@ public class UserService
 
             if (authentication.isAuthenticated())
             {
+                userActivityProducer.sendActivity("User successfully logged in: " + user.getEmail());
+
                 return jwtService.generateToken(user.getEmail());
             }
         }
@@ -62,6 +65,7 @@ public class UserService
         User existingUser = userRepository.findById(userId).orElseThrow(()
                 -> (new UserNotFoundException("User with id " + userId + " does not exist")));
 
+        userActivityProducer.sendActivity("User asked for his information: " + existingUser.getEmail());
         return existingUser;
     }
 
@@ -76,6 +80,8 @@ public class UserService
         existingUser.setUsername(updateUserRequest.getUsername());
 
         userRepository.save(existingUser);
+
+        userActivityProducer.sendActivity("User updated his information: " + existingUser.getEmail());
 
         return "User successfully updated";
     }
