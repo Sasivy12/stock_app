@@ -48,6 +48,8 @@ public class UserService
 
             if (authentication.isAuthenticated())
             {
+                userActivityProducer.sendActivity("User successfully logged in: " + user.getEmail());
+
                 return jwtService.generateToken(user.getEmail());
             }
         }
@@ -63,6 +65,7 @@ public class UserService
         User existingUser = userRepository.findById(userId).orElseThrow(()
                 -> (new UserNotFoundException("User with id " + userId + " does not exist")));
 
+        userActivityProducer.sendActivity("User asked for his information: " + existingUser.getEmail());
         return existingUser;
     }
 
@@ -77,6 +80,8 @@ public class UserService
         existingUser.setUsername(updateUserRequest.getUsername());
 
         userRepository.save(existingUser);
+
+        userActivityProducer.sendActivity("User updated his information: " + existingUser.getEmail());
 
         return "User successfully updated";
     }

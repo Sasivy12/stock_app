@@ -11,6 +11,6 @@ public class UserActivityConsumer
     @KafkaListener(topics = "user-activity", groupId = "stock_app_group")
     public void consume(String message)
     {
-        log.info("User acitvity recieved {}", message);
+        log.info("User activity received: {}", message);
     }
 }

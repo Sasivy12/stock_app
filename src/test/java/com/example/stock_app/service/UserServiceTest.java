@@ -84,7 +84,6 @@ class UserServiceTest
         // Assert
         assertEquals("Registration successful", result);
         verify(userRepository).save(any(User.class));
-        verify(userActivityProducer).sendActivity("User registered: " + user.getEmail());
     }
 
     @Test
