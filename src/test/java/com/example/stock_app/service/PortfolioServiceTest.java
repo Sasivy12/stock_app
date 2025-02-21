@@ -33,6 +33,10 @@ class PortfolioServiceTest
     @Mock
     private StockApiClient stockApiClient;
 
+    @Mock
+    private UserActivityProducer userActivityProducer;
+
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);

@@ -31,6 +31,7 @@ public class StockService
     private final TransactionRepository transactionRepository;
     private final String API_KEY = "EXVGDTN70BIXNV5N";
     private final StockApiClient stockApiClient;
+    private final UserActivityProducer userActivityProducer;
 
 
     public StockDTO getStockPrice(String symbol)
@@ -112,6 +113,11 @@ public class StockService
         portfolio.setQuantity(request.getQuantity());
 
         portfolioRepository.save(portfolio);
+
+        userActivityProducer.sendActivity(
+                        "User " + existingUser.getEmail() +
+                        " has purchased stock " + portfolio.getStock() +
+                        " quantity: " + portfolio.getQuantity());
 
         return new StockDTO(stock.getSymbol(), stock.getName(), stock.getPrice());
     }

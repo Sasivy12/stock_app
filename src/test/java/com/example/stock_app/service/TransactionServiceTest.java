@@ -26,6 +26,9 @@ class TransactionServiceTest
     @Mock
     private UserRepository userRepository;
 
+    @Mock
+    private UserActivityProducer userActivityProducer;
+
     @BeforeEach
     void setUp()
     {
