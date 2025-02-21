@@ -23,6 +23,7 @@ public class PortfolioService
     private final UserRepository userRepository;
     private final StockApiClient stockApiClient;
     private final String API_KEY = "xxxxxx";
+    private final UserActivityProducer userActivityProducer;
 
 
     public List<Portfolio> getUserPortfolio(Long userId)
@@ -57,6 +58,11 @@ public class PortfolioService
             portfolio.setQuantity(portfolio.getQuantity() - quantity);
             portfolioRepository.save(portfolio);
         }
+        
+        userActivityProducer.sendActivity(
+                "User " + user.getEmail() +
+                " has sold stock: " + portfolio.getStock() +
+                " quantity: " + portfolio.getQuantity());
 
         userRepository.save(user);
     }

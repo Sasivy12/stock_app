@@ -13,6 +13,7 @@ public class TransactionService
 {
     private final TransactionRepository transactionRepository;
     private final UserRepository userRepository;
+    private final UserActivityProducer userActivityProducer;
 
     public void addFunds(Long userId, double amount)
     {
@@ -25,6 +26,8 @@ public class TransactionService
         }
 
         user.setBalance(user.getBalance() + amount);
+
+        userActivityProducer.sendActivity("User increased his balance: " + user.getEmail());
         userRepository.save(user);
     }
 }
